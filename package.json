@@ -1,13 +1,12 @@
 {
-  "name": "xtream-addon-server",
+  "name": "xstream-addon",
   "version": "1.0.0",
-  "description": "Server fetching streams from Xtream API",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "axios": "^1.4.0",
-    "express": "^4.18.2"
+    "stremio-addon-sdk": "^latest",
+    "axios": "^latest"
   }
 }
