@@ -1,9 +1,23 @@
 {
+  "id": "com.yourname.streamingurlgenerator",
+  "version": "1.0.0",
   "name": "Streaming URL Generator",
-  "version": "1.0",
-  "manifest_version": 3,
-  "permissions": [],
-  "background": {
-    "service_worker": "index.js"
+  "description": "Generate streaming URLs using environment variables",
+  "types": ["movie", "series"],
+  "resources": ["stream"],
+  "icon": "https://project-5adck.vercel.app/icon.png",
+  "environment": {
+    "API_BASE_URL": {
+      "type": "string",
+      "default": "http://tv.business-cloud-8k.com/get.php"
+    },
+    "API_USERNAME": {
+      "type": "string",
+      "default": "ba8aed94db"
+    },
+    "API_PASSWORD": {
+      "type": "string",
+      "default": "ntw0p7fmv5"
+    }
   }
 }
