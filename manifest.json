@@ -1,0 +1,10 @@
+{
+  "id": "com.vercel.project5adck",
+  "version": "1.0.0",
+  "name": "JuTy",
+  "description": "JuTy",
+  "resources": " video",
+  "types":  "movie",
+ 	 "series",
+  "endpoint": "https://project-5adck-p0c2zfdbr-dj1997ty-5023s-projects.vercel.app/"
+}
