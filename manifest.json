@@ -1,9 +1,9 @@
 {
-  "id": "com.yourname.youraddon",
+  "id": "org.yourname.xstream",
   "version": "1.0.0",
-  "name": "My Xtream Addon",
-  "description": "An addon fetching streams from Xtream API",
-  "resources": ["video"],
+  "name": "XStream Streaming Addon",
+  "description": "Streams content from XStream API based on selection.",
   "types": ["movie", "series"],
-  "endpoint": "https://your-project.vercel.app/api/stream"
+  "resources": ["stream"],
+  "idPrefixes": ["tt"]
 }
