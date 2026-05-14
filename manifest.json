@@ -1,9 +1,0 @@
-{
-  "id": "org.yourname.xtreamplugin",
-  "version": "1.0.0",
-  "name": "Xtream API Plugin",
-  "types": ["series", "movie"],
-  "resources": ["stream"],
-  "api": "https://project-5adck.vercel.app",
-  "catalogs": []
-}
