@@ -1,11 +1,12 @@
-import getStreamingUrl from './utils/getStreamingUrl';
+import dotenv from 'dotenv';
+import getStreamingUrl from './utils/getStreamingUrl.js';
+
+// Load environment variables from `.env` (default behavior)
+dotenv.config();
 
 try {
-  const streamingUrl = getStreamingUrl();
-  console.log('Your streaming URL:', streamingUrl);
-  
-  // You can now fetch or use this URL as needed
-  // Example: fetch(streamingUrl)...
-} catch (error) {
-  console.error(error.message);
+  const url = getStreamingUrl();
+  console.log('Generated streaming URL:', url);
+} catch (err) {
+  console.error('Error generating URL:', err);
 }
