@@ -5,5 +5,5 @@
   "description": "An addon fetching streams from Xtream API",
   "resources": ["video"],
   "types": ["movie", "series"],
-  "endpoint": "https://project-5adck-git-main-dj1997ty-5023s-projects.vercel.app"
+  "endpoint": "https://your-project.vercel.app/api/stream"
 }
