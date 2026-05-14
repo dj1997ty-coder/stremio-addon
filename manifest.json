@@ -4,6 +4,6 @@
   "name": "Xtream API Plugin",
   "types": ["series", "movie"],
   "resources": ["stream"],
-  "api": "https://project-5adck.vercel.app/",
+  "api": "https://project-5adck.vercel.app",
   "catalogs": []
 }
