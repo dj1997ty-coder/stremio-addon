@@ -1,42 +1,42 @@
-const express = require('express');
+const { addonBuilder } = require('stremio-addon-sdk');
 const axios = require('axios');
-const app = express();
 
-// Xtream API URL (with embedded credentials)
-const xtreamApiUrl = 'http://tv.business-cloud-8k.com/get.php?username=ba8aed94db&password=ntw0p7fmv5&type=m3u_plus&output=ts';
+const manifest = {
+  id: 'org.yourname.xstream',
+  version: '1.0.0',
+  name: 'XStream Streaming Addon',
+  description: 'Streams content from XStream API based on selection.',
+  types: ['movie', 'series'],
+  resources: ['stream'],
+  idPrefixes: ['tt']
+};
 
-app.use(express.json());
+const builder = new addonBuilder(manifest);
 
-// Serve the manifest.json
-app.get('/manifest.json', (req, res) => {
-  res.json({
-    "id": "com.yourname.youraddon",
-    "version": "1.0.0",
-    "name": "My Xtream Addon",
-    "description": "An addon fetching streams from Xtream API",
-    "resources": ["video"],
-    "types": ["movie", "series"],
-    "endpoint": "https://project-5adck-git-main-dj1997ty-5023s-projects.vercel.app"
-  });
-});
-
-// Fetch streams from Xtream API
-app.get('/stream', async (req, res) => {
+// Fetch stream URL from XStream API
+async function fetchStreamUrl(id) {
   try {
-    const response = await axios.get(xtreamApiUrl);
-    const data = response.data;
-
-    // Send the raw M3U playlist data
-    res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
-    res.send(data);
+    const response = await axios.get(`https://api.xstreamapi.com/stream/${id}`);
+    return response.data.streamUrl;
   } catch (error) {
-    console.error('Error fetching Xtream streams:', error.message);
-    res.status(500).json({ error: 'Failed to fetch streams' });
+    console.error('Error fetching stream:', error);
+    return null;
+  }
+}
+
+// Define stream handler
+builder.defineStreamHandler(async (args) => {
+  const { id } = args;
+  const streamUrl = await fetchStreamUrl(id);
+  if (streamUrl) {
+    return { streams: [{ url: streamUrl, title: 'Stream from XStream' }] };
+  } else {
+    return { streams: [] };
   }
 });
 
-// Start server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// Export Vercel serverless function
+module.exports = async (req, res) => {
+  const interface = builder.getInterface();
+  await interface(req, res);
+};
