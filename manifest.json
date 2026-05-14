@@ -1,9 +1,9 @@
 {
-  "id": "org.yourname.xstream",
-  "version": "1.0.0",
-  "name": "XStream Streaming Addon",
-  "description": "Streams content from XStream API based on selection.",
-  "types": ["movie", "series"],
-  "resources": ["stream"],
-  "idPrefixes": ["tt"]
+  "name": "Streaming URL Generator",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [],
+  "background": {
+    "service_worker": "index.js"
+  }
 }
