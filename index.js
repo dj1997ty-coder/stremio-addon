@@ -1,71 +1,42 @@
-const { createStreamApi } = require("stremio-addon-sdk");
-const fetch = require("node-fetch");
+const express = require('express');
+const axios = require('axios');
+const app = express();
 
-// Replace with your actual credentials
-const USERNAME = "ba8aed94db";
-const PASSWORD = "ntw0p7fmv5";
+// Xtream API URL (with embedded credentials)
+const xtreamApiUrl = 'http://tv.business-cloud-8k.com/get.php?username=ba8aed94db&password=ntw0p7fmv5&type=m3u_plus&output=ts';
 
-// Store the token globally
-let authToken = null;
+app.use(express.json());
 
-// Function to login and get the token
-async function login() {
-  const loginUrl = "http://tv.business-cloud-8k.com/get.php";
-  const response = await fetch(loginUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username: USERNAME , password: PASSWORD }),
+// Serve the manifest.json
+app.get('/manifest.json', (req, res) => {
+  res.json({
+    "id": "com.yourname.youraddon",
+    "version": "1.0.0",
+    "name": "My Xtream Addon",
+    "description": "An addon fetching streams from Xtream API",
+    "resources": ["video"],
+    "types": ["movie", "series"],
+    "endpoint": "https://project-5adck-git-main-dj1997ty-5023s-projects.vercel.app"
   });
-  const data = await response.json();
-  authToken = data.token; // Adjust based on actual response
-}
+});
 
-// Fetch streams with authentication
-const getStreams = async function (args) {
-  if (!authToken) {
-    await login();
+// Fetch streams from Xtream API
+app.get('/stream', async (req, res) => {
+  try {
+    const response = await axios.get(xtreamApiUrl);
+    const data = response.data;
+
+    // Send the raw M3U playlist data
+    res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
+    res.send(data);
+  } catch (error) {
+    console.error('Error fetching Xtream streams:', error.message);
+    res.status(500).json({ error: 'Failed to fetch streams' });
   }
+});
 
-  const { id } = args;
-
-  const apiUrl = "https://xc-api.example.com/getStreams"; // Replace with your API endpoint
-
-  const response = await fetch(apiUrl, {
-    headers: {
-      "Authorization": `Bearer ${authToken}`, // Or use the way API expects token
-    },
-  });
-  const data = await response.json();
-
-  const streamsData = data.streams || [];
-
-  const streams = streamsData.map((stream, index) => {
-    return {
-      id: `${id}-${index}`,
-      name: stream.title || `Stream ${index + 1}`,
-      type: "tv",
-      streams: [
-        {
-          url: stream.streamUrl,
-        },
-      ],
-    };
-  });
-
-  return streams;
-};
-
-const manifest = {
-  id: "org.my.xcapi",
-  version: "1.0.0",
-  name: "XC API Streams",
-  description: "Fetches streams from XC API with auth",
-  resources: ["stream"],
-  types: ["tv", "movie"],
-  idPrefixes: ["xc"]
-};
-
-const { getRouter, createAddonInterface } = createStreamApi(manifest, { getStreams });
-const addonInterface = createAddonInterface({ getRouter });
-
-module.exports = addonInterface;
+// Start server
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
