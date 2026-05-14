@@ -1,0 +1,12 @@
+{
+  "name": "stremio-addon-xc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "stremio-addon-sdk": "^4.0.0",
+    "node-fetch": "^2.6.7"
+  }
+}
