@@ -5,5 +5,5 @@
   "description": "JuTy Addon",
   "resources": ["video", "image"],
   "types": ["movie", "series"],
-  "endpoint": "https://project-5adck-p0c2zfdbr-dj1997ty-5023s-projects.vercel.app"
+  "endpoint": "https://project-5adck-git-main-dj1997ty-5023s-projects.vercel.app/"
 }
